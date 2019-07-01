@@ -92,6 +92,11 @@ header h1 {
     border: 1px solid rgba(50, 50, 50, 0.3);
     transition: .4s ease-out;
     overflow: hidden;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.card:hover {
+    transform: scale(1.08)
 }
 
 .card-img {
@@ -206,6 +211,10 @@ header h1 {
     transition: .4s ease-out;
     outline: none;
   }
+
+.modal-btn-container .btn:hover {
+    background-color: green
+}
   
 
 /* ===================================== 
