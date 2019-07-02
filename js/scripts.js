@@ -34,7 +34,7 @@ const changeModal = (direction) => {
     document.querySelectorAll('.modal-text')[1].textContent = newUser.location.city
     document.querySelectorAll('.modal-text')[2].textContent = newUser.cell
     document.querySelectorAll('.modal-text')[3].textContent = `${newUser.location.street}, ${newUser.location.state} ${newUser.location.postcode}`
-    document.querySelectorAll('.modal-text')[4].textContent = `${getBirthday(newUser.dob.date)}`
+    document.querySelectorAll('.modal-text')[4].textContent = `Birthday: ${getBirthday(newUser.dob.date)}`
 }
 
 /*format birthday according the mockup*/
