@@ -11,7 +11,7 @@ const setGlobalVariables = (users) => {
 
 /*update modal data when prev next and buttons are clicked*/
 const changeModal = (direction) => {
-    currentIndex = 0
+    let currentIndex = 0
     const currentName = document.querySelector('.modal-name').textContent;
     filteredUsers.forEach((user, index) => {
         if((`${user.name.first} ${user.name.last}`) === currentName){
@@ -39,7 +39,7 @@ const changeModal = (direction) => {
 
 /*format birthday according the mockup*/
 const getBirthday = date => {
-  birthdayData = date.slice(0, 10).split("-");
+  let birthdayData = date.slice(0, 10).split("-");
   return `${birthdayData[1]}/${birthdayData[2]}/${birthdayData[0].slice(2, 4)}`;
 };
 
