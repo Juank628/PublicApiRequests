@@ -1,11 +1,19 @@
 /*global variables*/
 let allUsers = [];
+let filteredUsers = [];
+
+/*set global variables after api fetch*/
+const setGlobalVariables = (users) => {
+  allUsers = users;
+  filteredUsers = users;
+  return Promise.resolve(users)
+}
 
 /*update modal data when prev next and buttons are clicked*/
 const changeModal = (direction) => {
     currentIndex = 0
     const currentName = document.querySelector('.modal-name').textContent;
-    allUsers.forEach((user, index) => {
+    filteredUsers.forEach((user, index) => {
         if((`${user.name.first} ${user.name.last}`) === currentName){
             currentIndex = index
         }
@@ -15,11 +23,11 @@ const changeModal = (direction) => {
     if(newUserIndex < 0){
         newUserIndex = 0
     }
-    if(newUserIndex > 11){
-        newUserIndex = 11
+    if(newUserIndex >= filteredUsers.length){
+        newUserIndex = filteredUsers.length - 1
     }
 
-    const newUser = allUsers[newUserIndex]
+    const newUser = filteredUsers[newUserIndex]
     document.querySelectorAll('.modal-img')[0].src = newUser.picture.large
     document.querySelectorAll('.modal-name')[0].textContent = `${newUser.name.first} ${newUser.name.last}`
     document.querySelectorAll('.modal-text')[0].textContent = newUser.email
@@ -42,7 +50,7 @@ const closeModal = () => {
 
 /*open the modal and load all the data according de user uuid*/
 const openModal = uuid => {
-  userData = allUsers.filter(user => user.login.uuid === uuid)[0];
+  const userData = allUsers.filter(user => user.login.uuid === uuid)[0];
   const modalDiv = document.createElement("div");
   modalDiv.className = "modal-container";
   modalDiv.innerHTML = `
@@ -99,11 +107,11 @@ const generateCardEvents = () => {
 const search = name => {
   const cards = document.querySelectorAll(".card");
   cards.forEach(card => card.remove());
-  searchUsers = allUsers.filter(user =>
+  filteredUsers = allUsers.filter(user =>
     user.name.first.toLowerCase().includes(name.toLowerCase()) ||
     user.name.last.toLowerCase().includes(name.toLowerCase())
   );
-  generateCards(searchUsers);
+  generateCards(filteredUsers);
   generateCardEvents();
 };
 
@@ -127,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 fetch("https://randomuser.me/api/?results=12&nat=us,au,ca,gb")
   .then(res => res.json())
   .then(data => data.results)
-  .then(users => (allUsers = users))
+  .then(setGlobalVariables)
   .then(generateCards)
   .then(generateCardEvents)
   .catch(err => console.log(err));
